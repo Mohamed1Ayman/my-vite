@@ -75,11 +75,17 @@ export default App; */
 const ShowPassword = () => {
   const [password, setPassword] = useState('password')
   const [showPassword, setShowPassword] = useState(false)
+  const [text, setText] = useState('mohamed')
   return (
     <div style={{position:'absolute',top:'50%',left:'50%',transform:"translate(-50%, -50%)",textAlign:'center'}}>
     <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
     <button onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'}</button>
+
+    <input type="text" onChange={(e) => setText(e.target.value)} value={text} />
+    <p>you name is {text}</p>
     </div>
+
+
   )
 }
 
