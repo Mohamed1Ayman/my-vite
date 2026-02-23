@@ -73,16 +73,38 @@ export default App; */
 
 
 const ShowPassword = () => {
-  const [password, setPassword] = useState('password')
-  const [showPassword, setShowPassword] = useState(false)
-  const [text, setText] = useState('mohamed')
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState('');
+  
+  const handelLogin = (e) => {
+    if(user === '' || password === ''){
+      alert('username and password are required')
+      return;
+    }
+    if(password.length < 6){
+      alert('password must be at least 6 characters')
+      return;
+    }
+    if(user.length < 3){
+      alert('username must be at least 3 characters')
+      return;
+    }
+    
+    e.preventDefault();
+    console.log({user, password}); 
+    
+  }
+  
   return (
     <div style={{position:'absolute',top:'50%',left:'50%',transform:"translate(-50%, -50%)",textAlign:'center'}}>
-    <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
-    <button onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'}</button>
+    <form onSubmit={handelLogin}>
+      <label htmlFor="username" style={{display:'block'}}>username</label>
+      <input type="text" name="userName" id="username" onChange={(e)=> setUser(e.target.value)} value={user} />
+      <label htmlFor="password">password</label>
+      <input type="password" name="password" style={{display:'block'}} id="password" onChange={(e)=> setPassword(e.target.value)} value={password} />
+      <button type="submit">Submit</button>
+    </form>
 
-    <input type="text" onChange={(e) => setText(e.target.value)} value={text} />
-    <p>you name is {text}</p>
     </div>
 
 
