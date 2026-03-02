@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useRef, useState } from "react";
 import { useEffect } from "react"; 
 import "./App.css";
 import Header from "./components/Header";
@@ -6,6 +6,8 @@ import Navbar from "./components/Navbar";
 import Products from "./components/products/Products";
 import Cart from "./components/products/Cart";
 import Button from "./components/products/Button";
+import { MoonLoader } from "react-spinners";
+
 
 
 
@@ -116,32 +118,77 @@ export default App; */
 //https://jsonplaceholder.typicode.com/photos
 // learn how to fetch data from an API and display it in a React component using useState and useEffect hooks.
 
-function App (){
-const [fetchData, setFetchData] = useState([]);
+// function App (){
+// const [fetchData, setFetchData] = useState([]);
+// const [loading, setLoading] = useState(false );
 
-useEffect( () => {
-  const api = async () => {
+// useEffect( () => {
+//   const api = async () => {
+//     try {
+//       setLoading(true)
+//       const res = await fetch('https://jsonplaceholder.typicode.com/photos')
+//       const data = await res.json()
+//       if(res.status === 200){
+//         setLoading(false);
+//         setFetchData(data);
+//       }
+//     } catch (error) {
+//       setLoading(false);
+//       console.log(error)
+//     }
+//   }
+//   api();
+// }, [])
+// return (
+//   <div>
+//     {loading ? (<MoonLoader size={50} color="#36D7B7" loading={loading} />) : fetchData.slice(0, 10).map((item)=>
+//     <ul>
+//       <li key={item.id}>{item.title}</li>
+//     </ul>)}
+//   </div>
+// )
+// }
+
+
+
+
+
+
+const products = [
+  { id: 1, title: 'Product 1', price: 400 ,image:'https://m.media-amazon.com/images/G/42/gno/sprites/nav-sprite-global-1x-reorg-privacy._CB546775727_.png',instadeOf:500,rate:4},
+ { id: 2, title: 'Product 2', price: 500 ,image:'https://via.placeholder.com/150',instadeOf:600,rate:5},
+  { id: 3, title: 'Product 3', price: 600 ,image:'https://via.placeholder.com/150',instadeOf:700,rate:3},
+];
+
+
+const App = () => {
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(false);
+ useEffect(() => {
+
+  const fetchProducts = async () => {
     try {
-      const res = await fetch('https://jsonplaceholder.typicode.com/photos')
-      const data = await res.json()
-      setFetchData(data)
+      setLoading(true);
+      // Simulate an API call with a delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setCart(products);
+      setLoading(false);
     } catch (error) {
-      console.log(error)
+      setLoading(false);
+      console.error('Error fetching products:', error);
     }
-  }
-  api();
-}, [])
-return (
-  <div>
-    {fetchData.slice(0, 10).map((item)=>
-    <div key={item.id}>
-      <h2>{item.title}</h2>
-      <img src={item.url} alt={item.title} />
-    </div>)}
-  </div>
-)
+  };
+
+  fetchProducts(); 
+ }, [])
+  return (
+   <div>{loading ? <div>Loading...</div> : <Products products={cart} />}</div>
+  )
 }
 
-export default App;
+
+export default App
+
+
 
 
